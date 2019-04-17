@@ -3,7 +3,7 @@
 #include <omp.h>
 #include <time.h>
 #include <stdlib.h>
-#define V 1000
+#define V 10000
 
 int minKey(int key[], int visited[])
 {
@@ -41,7 +41,7 @@ void printMST(int from[], int n, int graph[V][V])
         printf("%d - %d    %d \n", from[i], i, graph[i][from[i]]);
 }
 
-void primMST(int graph[V][V])
+void primMST(int **graph)
 {
     int from[V];
     int key[V], num_threads;
@@ -67,12 +67,15 @@ void primMST(int graph[V][V])
                 from[v] = u, key[v] = graph[u][v];
         }
     }
-    printMST(from, V, graph);
-    printf("\n%d threads are created in primMST\n", num_threads);
+    // printMST(from, V, graph);
+    // printf("\n%d threads are created in primMST\n", num_threads);
 }
 int main()
 {
-    int graph[V][V];
+    // int graph[V][V];
+    int **graph = (int **)malloc(V * sizeof(int *)); 
+    for (int x=0; x<V; x++) 
+        graph[x] = (int *)malloc(V * sizeof(int));
     int i, j;
     //Generate random adjacency matrix
     srand(time(NULL));
@@ -98,14 +101,10 @@ int main()
     //     printf("\n");
     // }
 
-    // double start = omp_get_wtime();
-    clock_t start = clock();
+    double start = omp_get_wtime();
     primMST(graph);
-    // double end = omp_get_wtime();
-    clock_t end = clock();
-    // printf("Time = %.16g", end - start);
-    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("%f\n", time_spent);
+    double end = omp_get_wtime();
+    printf("Time for par = %f\n", end - start);
 
     return 0;
 }

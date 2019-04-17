@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 // Number of vertices in the graph
-#define V 1000
+#define V 10000
 
 // A function to find the vertex with minimum key value, from the set of vertices not yet included in MST
 int minKey(int key[], int visited[])
@@ -35,7 +35,7 @@ int printMST(int from[], int n, int graph[V][V])
         printf("%d - %d    %d \n", from[i], i, graph[i][from[i]]);
 }
 
-void primMST(int graph[V][V])
+void primMST(int **graph)
 {
     int from[V];    // Array to store constructed MST
     int key[V];     // Key values used to pick minimum weight edge in cut
@@ -67,13 +67,16 @@ void primMST(int graph[V][V])
             if (graph[u][v] && visited[v] == 0 && graph[u][v] < key[v])
                 from[v] = u, key[v] = graph[u][v];
     }
-    printMST(from, V, graph);
+    // printMST(from, V, graph);
 }
 
 // driver program to test above function
 int main()
 {
-    int graph[V][V];
+    // int graph[V][V];
+    int **graph = (int **)malloc(V * sizeof(int *)); 
+    for (int x=0; x<V; x++) 
+        graph[x] = (int *)malloc(V * sizeof(int));
     int i, j;
     //Generate random adjacency matrix
     srand(time(NULL));
@@ -104,7 +107,7 @@ int main()
     clock_t end = clock();
 
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("%f\n", time_spent);
+    printf("Time for seq = %f\n", time_spent);
 
     return 0;
 }
