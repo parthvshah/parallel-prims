@@ -36,7 +36,7 @@ int minKey(int key[], int visited[])
     return index;
 }
 
-void printMST(int from[], int n, int graph[V][V])
+void printMST(int from[], int n, int **graph)
 {
     int i;
     printf("Edge   Weight\n");

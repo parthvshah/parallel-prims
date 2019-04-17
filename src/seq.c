@@ -27,7 +27,7 @@ int minKey(int key[], int visited[])
 }
 
 // A function to print the constructed MST stored in from[]
-int printMST(int from[], int n, int graph[V][V])
+int printMST(int from[], int n, int **graph)
 {
     int i;
     printf("Edge   Weight\n");
@@ -78,6 +78,7 @@ int main()
     for (int x=0; x<V; x++) 
         graph[x] = (int *)malloc(V * sizeof(int));
     int i, j;
+    
     //Generate random adjacency matrix
     srand(time(NULL));
     for (i = 0; i < V; i++)
