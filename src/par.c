@@ -5,11 +5,14 @@
 #include <stdlib.h>
 #define V 10000
 
+int num;
+
 int minKey(int key[], int visited[])
 {
     int min = INT_MAX, index, i;
 #pragma omp parallel
     {
+        num = omp_get_num_threads();
         int index_local = index;
         int min_local = min;
 #pragma omp for nowait
@@ -59,7 +62,6 @@ void primMST(int **graph)
         visited[u] = 1;
 
         int v;
-
 #pragma omp parallel for schedule(static)
         for (v = 0; v < V; v++)
         {
@@ -104,7 +106,7 @@ int main()
     double start = omp_get_wtime();
     primMST(graph);
     double end = omp_get_wtime();
-    printf("Time for par = %f\n", end - start);
+    printf("Time for par = %f\nThreads = %d\n", end - start, num);
 
     return 0;
 }
