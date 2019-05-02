@@ -66,7 +66,7 @@ void primMSTSeq(int **graph, int V)
 int minKey(int key[], int visited[], int V)
 {
     int min = INT_MAX, index, i;
-omp_set_num_threads(2);
+omp_set_num_threads(4);
 #pragma omp parallel
     {
         num = omp_get_num_threads();
