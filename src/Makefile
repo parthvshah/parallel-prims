@@ -7,13 +7,13 @@ default:
 	@echo "Use make prim or make clean"
 
 #prims driver using OpenMP
-prim: par.o
+bench: bench.o
 	$(CC) $(COPTFLAGS) -o $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(COPTFLAGS) -o $@ -c $<
 
 clean:
-	rm -f core *.o *~ prim
+	rm -f core *.o *~ bench
 
 # eof
